@@ -158,7 +158,6 @@
 <nav class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
 <div class="flex justify-between items-center px-margin-desktop py-4 max-w-container-max mx-auto">
 <div class="flex items-center gap-3">
-<img alt="manmarsci logo" class="w-8 h-8 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxWpL5Io4IO07RtT792ICtKfYbc2HItCtf_3ussgzXC7ME3Xh2aCIGhHlYDiIHq0NlNK6sijOqzVjXF9hX2XsUps9GWFbGdIO9VtUPBTLadkYF9z_5JNjOaGmCbVttNA_AZrH5Aeljfz2zIlHOPyG6AX-8hshzJggwWnii-vZIQ_dwVn4MeLr_PaP5b_rcfpOvniahvsPi1eI-Zupi0XSZA12A3ll5a4I2cDuz88C4inH8pzqrtIe70A"/>
 <span class="text-headline-md font-headline-md font-bold text-primary">manmarsci</span>
 </div>
 <div class="hidden md:flex items-center gap-8">
@@ -357,90 +356,8 @@
 </div>
 </section>
 
-<!-- ============================================ -->
-<!-- ADVANCED DATA ANALYTICS TO-DO LIST SECTION -->
-<!-- ============================================ -->
-<section class="px-margin-desktop max-w-container-max mx-auto my-32" id="growth-tracker">
-<div class="mb-12">
-<p class="font-label-sm text-label-sm text-secondary mb-4 uppercase tracking-[0.2em]">Personal Development</p>
-<h2 class="font-headline-xl text-headline-xl text-primary mb-4">Advanced Analytics <span class="text-secondary">Growth Tracker</span></h2>
-<p class="font-body-lg text-on-surface-variant max-w-2xl">A structured roadmap to elevate your data analytics expertise from practitioner to architect. Track your progress across four critical pillars.</p>
-</div>
 
-<!-- Overall Progress -->
-<div class="mb-10 bg-surface-container-low p-6 rounded-xl border border-outline-variant">
-<div class="flex flex-col md:flex-row justify-between items-center gap-4">
-<div class="flex items-center gap-6">
-<div class="relative w-20 h-20">
-<svg class="w-20 h-20 transform -rotate-90">
-<circle cx="40" cy="40" r="36" stroke="#c5c6cd" stroke-width="6" fill="none"/>
-<circle id="progress-ring" cx="40" cy="40" r="36" stroke="#4e45d5" stroke-width="6" fill="none" stroke-dasharray="226" stroke-dashoffset="226" stroke-linecap="round" class="progress-ring-circle"/>
-</svg>
-<div class="absolute inset-0 flex items-center justify-center">
-<span id="progress-percent" class="font-data-display text-xl text-primary">0%</span>
-</div>
-</div>
-<div>
-<h3 class="font-headline-md text-headline-md text-primary">Overall Completion</h3>
-<p class="font-body-md text-on-surface-variant">Complete all tasks to reach senior-level analytics proficiency.</p>
-</div>
-</div>
-<div class="flex gap-3">
-<button onclick="resetTodos()" class="px-4 py-2 border border-outline-variant rounded-lg font-label-sm text-label-sm hover:bg-surface-container-high transition-colors">Reset All</button>
-<button onclick="exportProgress()" class="px-4 py-2 bg-secondary text-white rounded-lg font-label-sm text-label-sm hover:bg-secondary/90 transition-colors">Export Progress</button>
-</div>
-</div>
-</div>
-
-<!-- Todo Categories Grid -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter" id="todo-container">
-<!-- Filled by JavaScript -->
-</div>
-
-<!-- Add New Task -->
-<div class="mt-10 bg-white border border-outline-variant rounded-xl p-6 md:p-8 shadow-sm">
-<h3 class="font-headline-md text-headline-md text-primary mb-6">Add Custom Learning Objective</h3>
-<div class="flex flex-col md:flex-row gap-4">
-<input type="text" id="new-todo-text" placeholder="e.g., Complete Kaggle Time Series competition..." class="flex-1 bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 font-body-md focus:outline-none focus:border-secondary transition-colors"/>
-<select id="new-todo-category" class="bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 font-body-md focus:outline-none focus:border-secondary transition-colors">
-<option value="technical">Technical Foundation</option>
-<option value="advanced">Advanced Analytics</option>
-<option value="tools">Tools & Platforms</option>
-<option value="business">Business Impact</option>
-</select>
-<button onclick="addTodo()" class="bg-on-tertiary-container text-white px-8 py-3 rounded-lg font-label-sm hover:bg-tertiary-container transition-all active:scale-95 flex items-center justify-center gap-2">
-<span class="material-symbols-outlined text-sm">add</span> Add Task
-</button>
-</div>
-</div>
-
-<!-- Quick Tips -->
-<div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-<div class="p-4 bg-tertiary-fixed/10 border border-tertiary-fixed/30 rounded-lg">
-<div class="flex items-center gap-2 mb-2">
-<span class="material-symbols-outlined text-on-tertiary-container text-sm">lightbulb</span>
-<span class="font-label-sm text-label-sm text-on-tertiary-container font-bold">Pro Tip</span>
-</div>
-<p class="font-body-md text-body-md text-on-surface-variant text-sm">Spend 30 mins daily on SQL practice. Consistency beats intensity for query mastery.</p>
-</div>
-<div class="p-4 bg-secondary-fixed/30 border border-secondary/20 rounded-lg">
-<div class="flex items-center gap-2 mb-2">
-<span class="material-symbols-outlined text-secondary text-sm">schedule</span>
-<span class="font-label-sm text-label-sm text-secondary font-bold">Time Block</span>
-</div>
-<p class="font-body-md text-body-md text-on-surface-variant text-sm">Dedicate Friday afternoons to experimentation and learning new tools.</p>
-</div>
-<div class="p-4 bg-primary-fixed/30 border border-primary/20 rounded-lg">
-<div class="flex items-center gap-2 mb-2">
-<span class="material-symbols-outlined text-primary text-sm">groups</span>
-<span class="font-label-sm text-label-sm text-primary font-bold">Community</span>
-</div>
-<p class="font-body-md text-body-md text-on-surface-variant text-sm">Join the Measure Slack community and local data meetups for networking.</p>
-</div>
-</div>
-</section>
-
-<!-- CTA/Next Step -->
+    <!-- CTA/Next Step -->
 <section class="px-margin-desktop max-w-container-max mx-auto mt-32 text-center">
 <div class="border border-outline-variant p-16 rounded-xl relative overflow-hidden">
 <div class="absolute top-0 right-0 p-8 opacity-10">
@@ -467,7 +384,7 @@
 <div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop py-12 max-w-container-max mx-auto gap-gutter">
 <div class="flex flex-col gap-4 items-center md:items-start">
 <div class="flex items-center gap-3">
-<img alt="manmarsci footer logo" class="w-6 h-6 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxWpL5Io4IO07RtT792ICtKfYbc2HItCtf_3ussgzXC7ME3Xh2aCIGhHlYDiIHq0NlNK6sijOqzVjXF9hX2XsUps9GWFbGdIO9VtUPBTLadkYF9z_5JNjOaGmCbVttNA_AZrH5Aeljfz2zIlHOPyG6AX-8hshzJggwWnii-vZIQ_dwVn4MeLr_PaP5b_rcfpOvniahvsPi1eI-Zupi0XSZA12A3ll5a4I2cDuz88C4inH8pzqrtIe70A"/>
+
 <span class="font-headline-md text-headline-md text-primary font-bold">manmarsci</span>
 </div>
 <p class="font-label-sm text-label-sm text-on-surface-variant max-w-xs text-center md:text-left">
