@@ -4,6 +4,18 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>E-commerce CRO Experiment | manmarsci</title>
+<meta name="description" content="A conversion rate optimization case study for e-commerce: hypothesis design, A/B testing, and the statistical analysis behind the uplift."/>
+<link href="https://manmarsci.com/case-study-02.html" rel="canonical"/>
+<meta content="E-commerce CRO Experiment | manmarsci" property="og:title"/>
+<meta content="A conversion rate optimization case study for e-commerce: hypothesis design, A/B testing, and the statistical analysis behind the uplift." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://manmarsci.com/case-study-02.html" property="og:url"/>
+<meta content="https://manmarsci.com/assets/og-image.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="E-commerce CRO Experiment | manmarsci" name="twitter:title"/>
+<meta content="A conversion rate optimization case study for e-commerce: hypothesis design, A/B testing, and the statistical analysis behind the uplift." name="twitter:description"/>
+<meta content="https://manmarsci.com/assets/og-image.png" name="twitter:image"/>
+
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -63,7 +75,7 @@
 </head>
 <body class="bg-background text-on-background font-body-md">
 <div id="toast" class="toast fixed top-24 right-6 z-[60] bg-primary text-on-primary px-6 py-3 rounded-lg shadow-lg font-label-sm text-label-sm flex items-center gap-2">
-    <span class="material-symbols-outlined text-tertiary-fixed">check_circle</span>
+    <span aria-hidden="true" class="material-symbols-outlined text-tertiary-fixed">check_circle</span>
     <span id="toast-message">Action completed</span>
 </div>
 <header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
@@ -77,11 +89,11 @@
             <a class="text-on-surface-variant hover:text-primary transition-colors" href="experience.html">Experience</a>
             <a class="text-on-surface-variant hover:text-primary transition-colors" href="contact.html">Contact</a>
         </nav>
-        <button onclick="showToast('CV download started')" class="hidden md:block bg-primary text-on-primary px-6 py-2 rounded font-label-sm hover:bg-secondary transition-all active:scale-95 cursor-pointer">Download CV</button>
-        <button id="mobile-menu-btn" class="md:hidden text-primary p-2 hover:bg-surface-container-low rounded-lg"><span class="material-symbols-outlined text-2xl">menu</span></button>
+        <button onclick="handleCVDownload(event)" class="hidden md:block bg-primary text-on-primary px-6 py-2 rounded font-label-sm hover:bg-secondary transition-all active:scale-95 cursor-pointer">Download CV</button>
+        <button id="mobile-menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" class="md:hidden text-primary p-2 hover:bg-surface-container-low rounded-lg"><span aria-hidden="true" class="material-symbols-outlined text-2xl">menu</span></button>
     </div>
     <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 w-72 h-full bg-surface shadow-2xl z-50 p-8 md:hidden">
-        <button id="close-menu" class="absolute top-4 right-4 text-primary p-2 hover:bg-surface-container-low rounded-lg"><span class="material-symbols-outlined">close</span></button>
+        <button id="close-menu" aria-label="Close menu" class="absolute top-4 right-4 text-primary p-2 hover:bg-surface-container-low rounded-lg"><span aria-hidden="true" class="material-symbols-outlined">close</span></button>
         <div class="mt-16 flex flex-col gap-6">
             <a class="text-secondary font-bold text-headline-md" href="advanced-projects.html">Projects</a>
             <a class="text-on-surface-variant hover:text-secondary text-headline-md" href="experience.html">Experience</a>
@@ -95,7 +107,7 @@
     <!-- Hero -->
     <section class="px-margin-mobile md:px-margin-desktop py-16 max-w-container-max mx-auto blueprint-bg">
         <div class="mb-6 flex items-center gap-3">
-            <a href="advanced-projects.html" class="flex items-center gap-1 text-on-surface-variant hover:text-secondary transition-colors font-label-sm"><span class="material-symbols-outlined text-sm">arrow_back</span> Back to Projects</a>
+            <a href="advanced-projects.html" class="flex items-center gap-1 text-on-surface-variant hover:text-secondary transition-colors font-label-sm"><span aria-hidden="true" class="material-symbols-outlined text-sm">arrow_back</span> Back to Projects</a>
             <span class="text-outline">|</span>
             <span class="font-label-sm bg-secondary-fixed text-on-secondary-fixed-variant px-2 py-0.5">CASE STUDY</span>
             <span class="font-label-sm text-on-tertiary-container bg-tertiary-fixed px-2 py-0.5">CRO</span>
@@ -109,18 +121,18 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
             <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8">
                 <div class="flex items-center gap-2 mb-4">
-                    <span class="material-symbols-outlined text-error">report_problem</span>
+                    <span aria-hidden="true" class="material-symbols-outlined text-error">report_problem</span>
                     <h2 class="font-headline-md text-headline-md text-primary">The Problem</h2>
                 </div>
                 <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">A major retail brand's checkout flow had a 68% abandonment rate at the payment step. The UX team had made 12 incremental changes over 18 months with no statistically significant lift. The business needed a rigorous, data-driven approach to identify which combination of checkout elements — progress indicators, trust badges, payment options, and shipping transparency — would actually move the needle on revenue.</p>
             </div>
             <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8">
                 <div class="flex items-center gap-2 mb-4">
-                    <span class="material-symbols-outlined text-secondary">route</span>
+                    <span aria-hidden="true" class="material-symbols-outlined text-secondary">route</span>
                     <h2 class="font-headline-md text-headline-md text-primary">The Approach</h2>
                 </div>
                 <ul class="space-y-3 font-body-md text-on-surface-variant">
-                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-secondary mt-0.5">check_circle</span><span>Conducted quantitative funnel analysis and qualitative heatmap/session recording review</span></li><li class="flex items-start gap-3"><span class="material-symbols-outlined text-secondary mt-0.5">check_circle</span><span>Designed a 2^4 fractional factorial multivariate test isolating 4 key variables</span></li><li class="flex items-start gap-3"><span class="material-symbols-outlined text-secondary mt-0.5">check_circle</span><span>Used Bayesian inference to calculate probability of superiority for each variant combination</span></li><li class="flex items-start gap-3"><span class="material-symbols-outlined text-secondary mt-0.5">check_circle</span><span>Implemented sequential testing to reduce required sample size by 35%</span></li><li class="flex items-start gap-3"><span class="material-symbols-outlined text-secondary mt-0.5">check_circle</span><span>Ran post-test segmentation to understand winner performance across device types and traffic sources</span></li>
+                    <li class="flex items-start gap-3"><span aria-hidden="true" class="material-symbols-outlined text-secondary mt-0.5">check_circle</span><span>Conducted quantitative funnel analysis and qualitative heatmap/session recording review</span></li><li class="flex items-start gap-3"><span aria-hidden="true" class="material-symbols-outlined text-secondary mt-0.5">check_circle</span><span>Designed a 2^4 fractional factorial multivariate test isolating 4 key variables</span></li><li class="flex items-start gap-3"><span aria-hidden="true" class="material-symbols-outlined text-secondary mt-0.5">check_circle</span><span>Used Bayesian inference to calculate probability of superiority for each variant combination</span></li><li class="flex items-start gap-3"><span aria-hidden="true" class="material-symbols-outlined text-secondary mt-0.5">check_circle</span><span>Implemented sequential testing to reduce required sample size by 35%</span></li><li class="flex items-start gap-3"><span aria-hidden="true" class="material-symbols-outlined text-secondary mt-0.5">check_circle</span><span>Ran post-test segmentation to understand winner performance across device types and traffic sources</span></li>
                 </ul>
             </div>
         </div>
@@ -179,7 +191,7 @@ print(f"P(variant > control) = {prob_superior:.1%}")  # 99.7%</code></pre>
                 <div class="mt-8 p-5 bg-tertiary-fixed/10 border border-tertiary-fixed/30 rounded-xl">
                     <h4 class="font-headline-md text-headline-md text-primary mb-3">Key Learnings</h4>
                     <ul class="space-y-3 font-body-md text-on-surface-variant text-sm">
-                        <li class="flex items-start gap-3"><span class="material-symbols-outlined text-on-tertiary-container mt-0.5">lightbulb</span><span>Fractional factorial design let us test 16 combinations with only 8 cell traffic</span></li><li class="flex items-start gap-3"><span class="material-symbols-outlined text-on-tertiary-container mt-0.5">lightbulb</span><span>Bayesian approach allowed us to declare a winner 2 weeks earlier than frequentist</span></li><li class="flex items-start gap-3"><span class="material-symbols-outlined text-on-tertiary-container mt-0.5">lightbulb</span><span>Mobile vs desktop had opposite optimal variants — one-size-fits-all was losing money</span></li><li class="flex items-start gap-3"><span class="material-symbols-outlined text-on-tertiary-container mt-0.5">lightbulb</span><span>Trust badges performed 3x better when localized to user's country</span></li>
+                        <li class="flex items-start gap-3"><span aria-hidden="true" class="material-symbols-outlined text-on-tertiary-container mt-0.5">lightbulb</span><span>Fractional factorial design let us test 16 combinations with only 8 cell traffic</span></li><li class="flex items-start gap-3"><span aria-hidden="true" class="material-symbols-outlined text-on-tertiary-container mt-0.5">lightbulb</span><span>Bayesian approach allowed us to declare a winner 2 weeks earlier than frequentist</span></li><li class="flex items-start gap-3"><span aria-hidden="true" class="material-symbols-outlined text-on-tertiary-container mt-0.5">lightbulb</span><span>Mobile vs desktop had opposite optimal variants — one-size-fits-all was losing money</span></li><li class="flex items-start gap-3"><span aria-hidden="true" class="material-symbols-outlined text-on-tertiary-container mt-0.5">lightbulb</span><span>Trust badges performed 3x better when localized to user's country</span></li>
                     </ul>
                 </div>
             </div>
@@ -189,8 +201,8 @@ print(f"P(variant > control) = {prob_superior:.1%}")  # 99.7%</code></pre>
     <!-- Case Study Nav -->
     <section class="px-margin-mobile md:px-margin-desktop pb-20 max-w-container-max mx-auto">
         <div class="flex justify-between items-center border-t border-outline-variant pt-8">
-            <a href="case-study-01.html" class="flex items-center gap-2 text-on-surface-variant hover:text-secondary transition-colors font-label-sm"><span class="material-symbols-outlined">arrow_back</span> Previous Case Study</a>
-            <a href="case-study-03.html" class="flex items-center gap-2 text-on-surface-variant hover:text-secondary transition-colors font-label-sm">Next Case Study <span class="material-symbols-outlined">arrow_forward</span></a>
+            <a href="case-study-01.html" class="flex items-center gap-2 text-on-surface-variant hover:text-secondary transition-colors font-label-sm"><span aria-hidden="true" class="material-symbols-outlined">arrow_back</span> Previous Case Study</a>
+            <a href="case-study-03.html" class="flex items-center gap-2 text-on-surface-variant hover:text-secondary transition-colors font-label-sm">Next Case Study <span aria-hidden="true" class="material-symbols-outlined">arrow_forward</span></a>
         </div>
     </section>
 </main>
@@ -201,8 +213,9 @@ print(f"P(variant > control) = {prob_superior:.1%}")  # 99.7%</code></pre>
             <img alt="manmarsci Logo" class="w-8 h-8 grayscale opacity-70" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxWpL5Io4IO07RtT792ICtKfYbc2HItCtf_3ussgzXC7ME3Xh2aCIGhHlYDiIHq0NlNK6sijOqzVjXF9hX2XsUps9GWFbGdIO9VtUPBTLadkYF9z_5JNjOaGmCbVttNA_AZrH5Aeljfz2zIlHOPyG6AX-8hshzJggwWnii-vZIQ_dwVn4MeLr_PaP5b_rcfpOvniahvsPi1eI-Zupi0XSZA12A3ll5a4I2cDuz88C4inH8pzqrtIe70A"/>
             <span class="font-headline-md text-headline-md text-primary">manmarsci</span>
         </div>
-        <p class="font-label-sm text-label-sm text-on-surface-variant text-center md:text-left">&copy; 2024 manmarsci. All rights reserved.</p>
+        <p class="font-label-sm text-label-sm text-on-surface-variant text-center md:text-left">&copy; 2026 manmarsci. All rights reserved.</p>
         <div class="flex gap-6">
+<!-- TODO: replace linkedin.com / github.com / hello@manmarsci.com below with your real profile URLs and email -->
             <a class="font-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="https://linkedin.com" target="_blank">LinkedIn</a>
             <a class="font-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="https://github.com" target="_blank">GitHub</a>
             <a class="font-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="mailto:hello@manmarsci.com">Email</a>
@@ -211,10 +224,14 @@ print(f"P(variant > control) = {prob_superior:.1%}")  # 99.7%</code></pre>
 </footer>
 <script>
     function showToast(msg) { const t=document.getElementById('toast'),m=document.getElementById('toast-message'); m.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000); }
+    function handleCVDownload(event){event.preventDefault();const p='assets/manmarsci-cv.pdf';fetch(p,{method:'HEAD'}).then(r=>{if(r.ok){const a=document.createElement('a');a.href=p;a.download='manmarsci-cv.pdf';document.body.appendChild(a);a.click();a.remove();showToast('Downloading CV...');}else{showToast("CV isn't uploaded yet — email hello@manmarsci.com for a copy");}}).catch(()=>{showToast("Couldn't reach the CV file — email hello@manmarsci.com for a copy");});}
     const btn=document.getElementById('mobile-menu-btn'),menu=document.getElementById('mobile-menu'),close=document.getElementById('close-menu'),overlay=document.getElementById('mobile-overlay');
-    btn.addEventListener('click',()=>{menu.classList.add('open');overlay.classList.remove('hidden');document.body.style.overflow='hidden';});
-    close.addEventListener('click',()=>{menu.classList.remove('open');overlay.classList.add('hidden');document.body.style.overflow='';});
-    overlay.addEventListener('click',()=>{menu.classList.remove('open');overlay.classList.add('hidden');document.body.style.overflow='';});
+    function openMobileMenu(){menu.classList.add('open');overlay.classList.remove('hidden');document.body.style.overflow='hidden';btn.setAttribute('aria-expanded','true');close.focus();}
+    function closeMobileMenu(){menu.classList.remove('open');overlay.classList.add('hidden');document.body.style.overflow='';btn.setAttribute('aria-expanded','false');btn.focus();}
+    btn.addEventListener('click',openMobileMenu);
+    close.addEventListener('click',closeMobileMenu);
+    overlay.addEventListener('click',closeMobileMenu);
+    document.addEventListener('keydown',(e)=>{if(e.key==='Escape'&&menu.classList.contains('open'))closeMobileMenu();});
 </script>
 </body>
 </html>
