@@ -153,9 +153,9 @@
 <!-- TopNavBar -->
 <header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant transition-all duration-300">
 <nav class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto h-16">
-<div class="flex items-center gap-3">
+<a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity" aria-label="manmarsci home">
 <span class="text-headline-md font-headline-md font-bold text-primary">manmarsci</span>
-</div>
+</a>
 <div class="hidden md:flex items-center gap-8 font-body-md text-body-md">
 <a class="text-on-surface-variant hover:text-secondary transition-colors duration-200" href="advanced-projects.html">Projects</a>
 <a class="text-on-surface-variant hover:text-secondary transition-colors duration-200" href="experience.html">Experience</a>
@@ -169,6 +169,8 @@
 </button>
 </nav>
 <!-- Mobile Menu -->
+
+</header>
 <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 w-72 h-full bg-surface shadow-2xl z-50 p-8 md:hidden">
     <button id="close-menu" aria-label="Close menu" class="absolute top-4 right-4 text-primary p-2 hover:bg-surface-container-low rounded-lg">
         <span aria-hidden="true" class="material-symbols-outlined">close</span>
@@ -183,7 +185,6 @@
     </div>
 </div>
 <div id="mobile-overlay" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden"></div>
-</header>
 
 <main class="pt-32 pb-24 blueprint-bg">
 <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">

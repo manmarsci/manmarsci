@@ -156,9 +156,9 @@
 <!-- Top Navigation Bar -->
 <nav class="fixed top-0 w-full bg-surface/80 backdrop-blur-md z-50 border-b border-outline-variant">
 <div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
-<div class="flex items-center gap-3">
+<a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity" aria-label="manmarsci home">
 <span class="text-headline-md font-headline-md font-bold text-primary">manmarsci</span>
-</div>
+</a>
 <!-- Desktop Nav Links -->
 <div class="hidden md:flex items-center gap-8">
 <a class="text-secondary font-bold border-b-2 border-secondary pb-1 transition-transform active:scale-95" href="advanced-projects.html">Projects</a>
@@ -174,6 +174,8 @@
 </button>
 </div>
 <!-- Mobile Menu -->
+
+</nav>
 <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 w-72 h-full bg-surface shadow-2xl z-50 p-8 md:hidden">
     <button id="close-menu" aria-label="Close menu" class="absolute top-4 right-4 text-primary p-2 hover:bg-surface-container-low rounded-lg">
         <span aria-hidden="true" class="material-symbols-outlined">close</span>
@@ -188,7 +190,6 @@
     </div>
 </div>
 <div id="mobile-overlay" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden"></div>
-</nav>
 
 <main class="pt-24">
 <!-- Hero Section -->

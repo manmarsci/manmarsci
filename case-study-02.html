@@ -80,10 +80,10 @@
 </div>
 <header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
     <div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
-        <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity" aria-label="manmarsci home">
             <img alt="manmarsci Logo" class="w-8 h-8 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxWpL5Io4IO07RtT792ICtKfYbc2HItCtf_3ussgzXC7ME3Xh2aCIGhHlYDiIHq0NlNK6sijOqzVjXF9hX2XsUps9GWFbGdIO9VtUPBTLadkYF9z_5JNjOaGmCbVttNA_AZrH5Aeljfz2zIlHOPyG6AX-8hshzJggwWnii-vZIQ_dwVn4MeLr_PaP5b_rcfpOvniahvsPi1eI-Zupi0XSZA12A3ll5a4I2cDuz88C4inH8pzqrtIe70A"/>
             <span class="text-headline-md font-headline-md font-bold text-primary">manmarsci</span>
-        </div>
+        </a>
         <nav class="hidden md:flex items-center gap-8">
             <a class="text-secondary font-bold border-b-2 border-secondary pb-1" href="advanced-projects.html">Projects</a>
             <a class="text-on-surface-variant hover:text-primary transition-colors" href="experience.html">Experience</a>
@@ -92,16 +92,18 @@
         <button onclick="handleCVDownload(event)" class="hidden md:block bg-primary text-on-primary px-6 py-2 rounded font-label-sm hover:bg-secondary transition-all active:scale-95 cursor-pointer">Download CV</button>
         <button id="mobile-menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" class="md:hidden text-primary p-2 hover:bg-surface-container-low rounded-lg"><span aria-hidden="true" class="material-symbols-outlined text-2xl">menu</span></button>
     </div>
-    <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 w-72 h-full bg-surface shadow-2xl z-50 p-8 md:hidden">
+    
+</header>
+<div id="mobile-menu" class="mobile-menu fixed top-0 right-0 w-72 h-full bg-surface shadow-2xl z-50 p-8 md:hidden">
         <button id="close-menu" aria-label="Close menu" class="absolute top-4 right-4 text-primary p-2 hover:bg-surface-container-low rounded-lg"><span aria-hidden="true" class="material-symbols-outlined">close</span></button>
         <div class="mt-16 flex flex-col gap-6">
             <a class="text-secondary font-bold text-headline-md" href="advanced-projects.html">Projects</a>
             <a class="text-on-surface-variant hover:text-secondary text-headline-md" href="experience.html">Experience</a>
             <a class="text-on-surface-variant hover:text-secondary text-headline-md" href="contact.html">Contact</a>
+            <button onclick="handleCVDownload(event)" class="bg-primary text-on-primary px-6 py-3 rounded-lg font-label-sm text-label-sm mt-4 w-full">Download CV</button>
         </div>
     </div>
     <div id="mobile-overlay" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden"></div>
-</header>
 
 <main class="pt-24">
     <!-- Hero -->
