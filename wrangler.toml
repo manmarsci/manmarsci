@@ -1,0 +1,9 @@
+name = "portfolio-contact-form"
+main = "contact-worker.js"
+compatibility_date = "2026-01-01"
+
+# Non-secret config. ALLOWED_ORIGIN and MOTHERDUCK_TOKEN are set separately
+# as secrets (see README.md in this folder) since they shouldn't live in
+# version control.
+[vars]
+MOTHERDUCK_DATABASE = "portfolio"

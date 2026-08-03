@@ -1,62 +1,94 @@
-# manmarsci — Marketing Science Portfolio
+# Contact form → MotherDuck bridge
 
-Static multi-page portfolio site (HTML + Tailwind CSS via CDN).
+Why this exists: MotherDuck tokens grant broad read/write access to your
+account. The browser can't safely hold that token — anyone could read it out
+of the page's JavaScript and get full access to your data. This tiny
+Cloudflare Worker is the smallest amount of server-side code needed to keep
+the token private while still avoiding a third-party form service (Formspree,
+etc.) and a heavier backend. It's free on Cloudflare's free tier for this
+volume of traffic.
 
-## Pages
-- `index.html` — Home
-- `advanced-projects.html` — Projects / case study index
-- `case-study-01.html` .. `case-study-04.html` — Individual case studies
-- `experience.html` — CV / experience
-- `growth-tracker.html` — Personal growth roadmap
-- `contact.html` — Contact form
+## One-time setup
 
-## Changes in this pass
-- **Contact form** now POSTs to Formspree (`contact.html`). **You must replace
-  `YOUR_FORM_ID`** in the form's `action` attribute with your real Formspree
-  form ID (free signup at https://formspree.io) or it will fail silently to
-  users and show an error toast.
-- **CV download** button now does a real fetch/download of
-  `assets/manmarsci-cv.pdf`. A placeholder PDF is included so the button
-  works today — **replace `assets/manmarsci-cv.pdf` with your real resume**,
-  keeping the same filename. If the file is missing, the button now shows an
-  honest error toast instead of a fake "download started" message.
-- **Social links / email** — `linkedin.com`, `github.com`, and
-  `hello@manmarsci.com` are placeholders in every footer/contact block
-  (flagged with `<!-- TODO -->` comments in the HTML). Swap in your real
-  profile URLs and inbox.
-- **SEO** — added `<meta name="description">`, canonical URL, Open Graph, and
-  Twitter Card tags to every page's `<head>`, plus a generated
-  `assets/og-image.png` share image. These use `https://manmarsci.com` as the
-  placeholder domain — update to your real domain once you deploy.
-- **Dates** — copyright year and "available for partnerships" copy updated
-  off the stale 2024/2024-2025 references.
-- **Accessibility** — decorative Material Symbol icons are now
-  `aria-hidden="true"`; icon-only nav buttons (hamburger/close) have
-  `aria-label`s and `aria-expanded` state; the mobile menu closes on
-  Escape and returns focus to the triggering button.
-- **Stat credibility** — the "22% Avg. CRO Uplift" stat on the homepage now
-  links through to the case study that backs it up. The underlying numbers
-  (4+ years, 150+ models) are still yours to verify — I didn't invent or
-  check these, only linked what could be linked.
+**1. Create the table in MotherDuck.** Open the MotherDuck SQL editor
+(motherduck.com, or `duckdb` CLI with `ATTACH 'md:'`) and run:
 
-## Still needs a human decision
-- **Tailwind CDN to production build.** The site currently loads
-  cdn.tailwindcss.com at runtime, which Tailwind's own docs advise against
-  for production (slower, larger, no purge). To fix properly, on a machine
-  with internet access:
-  npm install -D tailwindcss
-  npx tailwindcss init
-  (point content: ["./*.html"] at your HTML files in tailwind.config.js,
-  move the inline tailwind.config script's theme.extend into that config)
-  npx tailwindcss -i ./src/input.css -o ./dist/output.css --minify
-  Then swap the cdn.tailwindcss.com script tag for a single
-  link rel="stylesheet" href="dist/output.css". This couldn't be done here
-  because this environment has no package registry access.
-- **Color contrast** — spot-check text-on-surface-variant (#45474c) and
-  similar muted text colors against their backgrounds with a contrast
-  checker (e.g. WebAIM) for WCAG AA compliance; a couple of combinations look
-  borderline.
-- **Shared header/footer** — nav, mobile menu, and footer markup is still
-  duplicated across all 9 HTML files. Fine as-is, but if you add more pages
-  it's worth moving to a static site generator (11ty, Astro) or a small
-  build step that injects a shared partial, so you only edit the nav once.
+```sql
+CREATE DATABASE IF NOT EXISTS portfolio;
+USE portfolio;
+CREATE SEQUENCE IF NOT EXISTS contact_submissions_seq START 1;
+CREATE TABLE IF NOT EXISTS contact_submissions (
+  id INTEGER DEFAULT nextval('contact_submissions_seq'),
+  name VARCHAR,
+  email VARCHAR,
+  subject VARCHAR,
+  message VARCHAR,
+  submitted_at TIMESTAMP
+);
+```
+
+**2. Get a MotherDuck token.** motherduck.com → your profile / Settings →
+Tokens → create a read/write token. Copy it somewhere safe (you won't be
+able to see it again).
+
+**3. Install Wrangler and deploy** (needs a machine with internet access —
+this couldn't be done from inside this sandbox):
+
+```bash
+npm install -g wrangler
+wrangler login
+
+cd worker
+wrangler deploy
+wrangler secret put MOTHERDUCK_TOKEN
+# paste the MotherDuck token when prompted, press enter
+wrangler secret put ALLOWED_ORIGIN
+# enter your real site origin, e.g. https://manmarsci.com
+# (use * only while testing locally — it allows any site to call your Worker)
+```
+
+Wrangler will print your Worker's URL after `wrangler deploy`, something like:
+
+```
+https://portfolio-contact-form.your-subdomain.workers.dev
+```
+
+**4. Point the site at it.** In `contact.html`, find:
+
+```html
+<form ... action="https://portfolio-contact-form.YOUR-WORKER-SUBDOMAIN.workers.dev" method="POST">
+```
+
+and replace the URL with the real one Wrangler gave you.
+
+**5. Test it.** Submit the live form, then in MotherDuck run:
+
+```sql
+SELECT * FROM portfolio.contact_submissions ORDER BY submitted_at DESC;
+```
+
+While testing, `wrangler tail` (run in the `worker/` folder) streams live
+logs from the Worker, which is the fastest way to see what's failing if a
+submission doesn't show up.
+
+## Notes / limitations
+
+- **SQL escaping, not full parameterization.** MotherDuck's HTTP/MCP
+  interface (the only public HTTP write path at the time this was written)
+  takes a literal SQL string rather than parameterized query arguments. The
+  Worker escapes single quotes before building the INSERT, which blocks the
+  common injection pattern, but it's not the same guarantee as a real
+  parameterized driver. If this ever becomes a concern, consider having the
+  Worker call MotherDuck through a lightweight backend using the official
+  DuckDB client library instead (Python/Node), which does support real
+  parameter binding — that would mean moving off Cloudflare Workers, since
+  the native DuckDB driver won't run in that runtime.
+- **This API surface is newer/evolving.** MotherDuck's write-capable HTTP
+  endpoint is MCP-based (`query_rw` tool at `api.motherduck.com/mcp`) rather
+  than a traditional REST insert endpoint — this is what's documented today,
+  but check MotherDuck's docs if the Worker starts getting errors, in case
+  the interface has changed.
+- **No spam protection.** This form has no CAPTCHA or rate limiting. If you
+  start getting spam, add a honeypot field (a hidden input real users won't
+  fill in; reject submissions where it's non-empty) or Cloudflare Turnstile,
+  which is free and pairs naturally with a Worker.
