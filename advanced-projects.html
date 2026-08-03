@@ -140,6 +140,12 @@
         .modal.active .modal-content {
             transform: scale(1);
         }
+        .project-card {
+            transition: all 0.3s ease;
+        }
+        .project-card:hover {
+            box-shadow: 8px 8px 0px 0px rgba(78,69,213,0.1);
+        }
     </style>
 </head>
 <body class="bg-background text-on-background font-body-md">
@@ -170,7 +176,8 @@
             </ul>
             <p><strong class="text-primary">Results:</strong> Reallocated $450K from underperforming bottom-funnel spend to awareness, driving 23% net revenue increase.</p>
         </div>
-        <button onclick="closeModal()" class="mt-8 w-full bg-secondary text-white py-3 rounded-lg font-label-sm hover:bg-secondary/90 transition-all">Close Brief</button>
+        <a href="case-study-04.html" class="mt-6 inline-block bg-secondary text-white px-6 py-3 rounded-lg font-label-sm hover:bg-secondary/90 transition-all">Read Full Case Study</a>
+        <button onclick="closeModal()" class="mt-2 w-full bg-surface-container-high text-primary py-3 rounded-lg font-label-sm hover:bg-surface-container transition-all">Close Brief</button>
     </div>
 </div>
 
@@ -240,7 +247,7 @@
 <div class="flex justify-between items-end mb-12">
 <div>
 <h2 class="font-headline-lg text-headline-lg text-primary">Selected Projects</h2>
-<p class="font-body-md text-on-surface-variant mt-2">Experimental results backed by rigorous statistical validation.</p>
+<p class="font-body-md text-on-surface-variant mt-2">Experimental results backed by rigorous statistical validation. Click any card to read the full case study.</p>
 </div>
 <div class="flex gap-2">
 <button onclick="showToast('Filter feature coming soon')" class="p-2 border border-outline-variant hover:bg-surface-container-high transition-colors cursor-pointer"><span class="material-symbols-outlined">filter_list</span></button>
@@ -249,15 +256,16 @@
 </div>
 <!-- Bento Grid of Projects -->
 <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+
 <!-- Project 1: Large Card -->
-<div class="md:col-span-8 group bg-surface-container-lowest border border-outline-variant p-6 hover:shadow-[8px_8px_0px_0px_rgba(78,69,213,0.1)] transition-all">
+<a href="case-study-01.html" class="md:col-span-8 project-card group bg-surface-container-lowest border border-outline-variant p-6 block">
 <div class="flex flex-col md:flex-row gap-8">
 <div class="md:w-1/2">
 <div class="mb-4 flex items-center gap-2">
 <span class="font-label-sm bg-surface-container text-on-surface px-2 py-0.5">CASE STUDY 01</span>
 <span class="font-label-sm text-on-tertiary-container bg-tertiary-fixed px-2 py-0.5">COMPLETED</span>
 </div>
-<h3 class="font-headline-md text-headline-md text-primary mb-4">Mobile App Retention Analysis</h3>
+<h3 class="font-headline-md text-headline-md text-primary mb-4 group-hover:text-secondary transition-colors">Mobile App Retention Analysis</h3>
 <p class="font-body-md text-on-surface-variant mb-6">
                                 Developed a survival analysis model to identify the critical churn inflection points for a Fintech app with 2M+ users. Implemented a predictive notification engine that targeted users at 85% churn probability.
                             </p>
@@ -268,6 +276,10 @@
 <li class="flex items-center gap-2 font-body-md"><span class="material-symbols-outlined text-secondary text-sm">check_circle</span> Random Forest classifier for feature importance</li>
 <li class="flex items-center gap-2 font-body-md"><span class="material-symbols-outlined text-secondary text-sm">check_circle</span> Automated A/B testing on nudge intervals</li>
 </ul>
+</div>
+<div class="mt-6 flex items-center gap-2 text-secondary font-label-sm font-bold">
+<span>Read Full Case Study</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
 </div>
 </div>
 <div class="md:w-1/2 flex flex-col justify-between">
@@ -284,9 +296,10 @@
 </div>
 </div>
 </div>
-</div>
+</a>
+
 <!-- Project 2: Medium Card -->
-<div class="md:col-span-4 group bg-surface-container-lowest border border-outline-variant p-6 hover:shadow-[8px_8px_0px_0px_rgba(78,69,213,0.1)] transition-all">
+<a href="case-study-02.html" class="md:col-span-4 project-card group bg-surface-container-lowest border border-outline-variant p-6 block">
 <div class="h-40 w-full bg-surface-container-low border border-outline-variant mb-6 overflow-hidden">
 <div class="w-full h-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDEc7n1N3m2al3HwThSbOaW7-lqEEpZuNn54gvgzgZTOcN9JSSRc39QSgC6qNsBJKnfkDlZtf8Izmfhmz69KrA5p9OkyjRAfSkC1TRT61xZYsno0EbVGDy5sEXghxz46DkOYt5LCqeksvBqk-Q5XU2L1ZC0OrcJK6QUiHW6SjUUJQJdZ3xgyDtoXIxy5Sf-IK-NKutzy6XCmjdupyC2n0ArqHpvPhCcSnGl4HZRPFBHv8CFORaJWxQqVA')"></div>
 </div>
@@ -294,7 +307,7 @@
 <span class="font-label-sm bg-surface-container text-on-surface px-2 py-0.5">CRO</span>
 <span class="material-symbols-outlined text-on-surface-variant">monitoring</span>
 </div>
-<h3 class="font-headline-md text-headline-md text-primary mb-3">E-commerce CRO Experiment</h3>
+<h3 class="font-headline-md text-headline-md text-primary mb-3 group-hover:text-secondary transition-colors">E-commerce CRO Experiment</h3>
 <p class="font-body-md text-on-surface-variant mb-6">
                         Multi-variate testing on checkout flow for a major retail brand. Optimized friction points using heatmaps and Bayesian inference.
                     </p>
@@ -305,13 +318,18 @@
 <span class="px-2 py-1 bg-surface-container border border-outline-variant font-label-sm text-primary">AOV +$14</span>
 </div>
 </div>
+<div class="mt-4 flex items-center gap-2 text-secondary font-label-sm font-bold">
+<span>Read Full Case Study</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
 </div>
+</a>
+
 <!-- Project 3: Medium Card -->
-<div class="md:col-span-5 group bg-surface-container-lowest border border-outline-variant p-6 hover:shadow-[8px_8px_0px_0px_rgba(78,69,213,0.1)] transition-all">
+<a href="case-study-03.html" class="md:col-span-5 project-card group bg-surface-container-lowest border border-outline-variant p-6 block">
 <div class="mb-4">
 <span class="font-label-sm bg-surface-container text-on-surface px-2 py-0.5">PREDICTIVE</span>
 </div>
-<h3 class="font-headline-md text-headline-md text-primary mb-4">Predictive Customer LTV Model</h3>
+<h3 class="font-headline-md text-headline-md text-primary mb-4 group-hover:text-secondary transition-colors">Predictive Customer LTV Model</h3>
 <p class="font-body-md text-on-surface-variant mb-6">
                         Engineered a machine learning pipeline to predict 12-month Customer Lifetime Value at the point of first purchase with 89% accuracy. This allowed for immediate segmentation of high-value versus low-value acquisition cohorts.
                     </p>
@@ -332,7 +350,12 @@
 <span class="px-2 py-1 bg-surface-container border border-outline-variant font-label-sm text-primary">ROAS +2.1x</span>
 </div>
 </div>
+<div class="mt-4 flex items-center gap-2 text-secondary font-label-sm font-bold">
+<span>Read Full Case Study</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
 </div>
+</a>
+
 <!-- Project 4: Large Card / Feature -->
 <div class="md:col-span-7 bg-primary text-on-primary p-8 relative overflow-hidden flex flex-col justify-center">
 <div class="absolute top-0 right-0 p-8 opacity-10">
@@ -353,9 +376,14 @@
 <p class="font-data-display text-2xl text-on-primary">94%</p>
 </div>
 </div>
+<div class="flex flex-wrap gap-4">
 <button onclick="openModal()" class="flex items-center gap-2 font-label-sm group-hover:gap-3 transition-all underline underline-offset-4 decoration-secondary decoration-2 cursor-pointer hover:text-secondary">
-                            VIEW FULL TECHNICAL BRIEF <span class="material-symbols-outlined">arrow_forward</span>
+                            VIEW TECHNICAL BRIEF <span class="material-symbols-outlined">arrow_forward</span>
 </button>
+<a href="case-study-04.html" class="flex items-center gap-2 font-label-sm bg-secondary text-white px-4 py-2 rounded-lg hover:bg-secondary/90 transition-all">
+                            READ FULL CASE STUDY <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
 </div>
 </div>
 </div>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bespoke Attribution Modeling | manmarsci</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary-container": "#1e293b", "outline-variant": "#c5c6cd", "on-background": "#191c1e",
+                    "tertiary-container": "#00301e", "secondary-container": "#6860ef", "inverse-primary": "#bcc7de",
+                    "primary": "#091426", "on-secondary-fixed": "#100069", "on-error": "#ffffff",
+                    "on-primary-fixed-variant": "#3c475a", "surface-container-highest": "#e0e3e5",
+                    "on-primary-fixed": "#111c2d", "inverse-surface": "#2d3133", "inverse-on-surface": "#eff1f3",
+                    "surface-container-low": "#f2f4f6", "background": "#f7f9fb", "tertiary-fixed-dim": "#4edea3",
+                    "tertiary-fixed": "#6ffbbe", "on-tertiary-fixed-variant": "#005236", "surface-container-high": "#e6e8ea",
+                    "secondary": "#4e45d5", "outline": "#75777d", "secondary-fixed-dim": "#c3c0ff",
+                    "on-primary-container": "#8590a6", "surface-container": "#eceef0", "surface-bright": "#f7f9fb",
+                    "on-tertiary-fixed": "#002113", "error-container": "#ffdad6", "primary-fixed": "#d8e3fb",
+                    "on-secondary-container": "#fffbff", "tertiary": "#00190e", "surface-tint": "#545f73",
+                    "surface-dim": "#d8dadc", "on-surface-variant": "#45474c", "on-tertiary-container": "#00a472",
+                    "on-secondary": "#ffffff", "on-secondary-fixed-variant": "#372abf", "on-tertiary": "#ffffff",
+                    "surface": "#f7f9fb", "surface-variant": "#e0e3e5", "on-error-container": "#93000a",
+                    "secondary-fixed": "#e3dfff", "primary-fixed-dim": "#bcc7de", "error": "#ba1a1a",
+                    "surface-container-lowest": "#ffffff", "on-primary": "#ffffff", "on-surface": "#191c1e"
+                },
+                borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" },
+                spacing: { "container-max": "1280px", "margin-desktop": "64px", "margin-mobile": "16px", "gutter": "24px", "unit": "4px" },
+                fontFamily: {
+                    "body-md": ["Inter"], "headline-lg": ["Space Grotesk"], "headline-md": ["Space Grotesk"],
+                    "body-lg": ["Inter"], "headline-xl": ["Space Grotesk"], "label-sm": ["JetBrains Mono"],
+                    "data-display": ["Space Grotesk"], "headline-lg-mobile": ["Space Grotesk"]
+                },
+                fontSize: {
+                    "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                    "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "600" }],
+                    "headline-md": ["24px", { lineHeight: "32px", fontWeight: "500" }],
+                    "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+                    "headline-xl": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                    "label-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500" }],
+                    "data-display": ["40px", { lineHeight: "48px", letterSpacing: "-0.03em", fontWeight: "700" }],
+                    "headline-lg-mobile": ["24px", { lineHeight: "32px", fontWeight: "600" }]
+                }
+            }
+        }
+    }
+</script>
+<style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .mobile-menu { transform: translateX(100%); transition: transform 0.3s ease-in-out; }
+    .mobile-menu.open { transform: translateX(0); }
+    .toast { transform: translateY(-100px); opacity: 0; transition: all 0.4s ease; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .blueprint-bg { background-image: linear-gradient(#e2e8f0 1px, transparent 1px), linear-gradient(90deg, #e2e8f0 1px, transparent 1px); background-size: 40px 40px; }
+    pre code { font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body class="bg-background text-on-background font-body-md">
+<div id="toast" class="toast fixed top-24 right-6 z-[60] bg-primary text-on-primary px-6 py-3 rounded-lg shadow-lg font-label-sm text-label-sm flex items-center gap-2">
+    <span class="material-symbols-outlined text-tertiary-fixed">check_circle</span>
+    <span id="toast-message">Action completed</span>
+</div>
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
+    <div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
+        <div class="flex items-center gap-3">
+            <img alt="manmarsci Logo" class="w-8 h-8 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxWpL5Io4IO07RtT792ICtKfYbc2HItCtf_3ussgzXC7ME3Xh2aCIGhHlYDiIHq0NlNK6sijOqzVjXF9hX2XsUps9GWFbGdIO9VtUPBTLadkYF9z_5JNjOaGmCbVttNA_AZrH5Aeljfz2zIlHOPyG6AX-8hshzJggwWnii-vZIQ_dwVn4MeLr_PaP5b_rcfpOvniahvsPi1eI-Zupi0XSZA12A3ll5a4I2cDuz88C4inH8pzqrtIe70A"/>
+            <span class="text-headline-md font-headline-md font-bold text-primary">manmarsci</span>
+        </div>
+        <nav class="hidden md:flex items-center gap-8">
+            <a class="text-secondary font-bold border-b-2 border-secondary pb-1" href="advanced-projects.html">Projects</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors" href="experience.html">Experience</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors" href="contact.html">Contact</a>
+        </nav>
+        <button onclick="showToast('CV download started')" class="hidden md:block bg-primary text-on-primary px-6 py-2 rounded font-label-sm hover:bg-secondary transition-all active:scale-95 cursor-pointer">Download CV</button>
+        <button id="mobile-menu-btn" class="md:hidden text-primary p-2 hover:bg-surface-container-low rounded-lg"><span class="material-symbols-outlined text-2xl">menu</span></button>
+    </div>
+    <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 w-72 h-full bg-surface shadow-2xl z-50 p-8 md:hidden">
+        <button id="close-menu" class="absolute top-4 right-4 text-primary p-2 hover:bg-surface-container-low rounded-lg"><span class="material-symbols-outlined">close</span></button>
+        <div class="mt-16 flex flex-col gap-6">
+            <a class="text-secondary font-bold text-headline-md" href="advanced-projects.html">Projects</a>
+            <a class="text-on-surface-variant hover:text-secondary text-headline-md" href="experience.html">Experience</a>
+            <a class="text-on-surface-variant hover:text-secondary text-headline-md" href="contact.html">Contact</a>
+        </div>
+    </div>
+    <div id="mobile-overlay" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden"></div>
+</header>
+
+<main class="pt-24">
+    <!-- Hero -->
+    <section class="px-margin-mobile md:px-margin-desktop py-16 max-w-container-max mx-auto blueprint-bg">
+        <div class="mb-6 flex items-center gap-3">
+            <a href="advanced-projects.html" class="flex items-center gap-1 text-on-surface-variant hover:text-secondary transition-colors font-label-sm"><span class="material-symbols-outlined text-sm">arrow_back</span> Back to Projects</a>
+            <span class="text-outline">|</span>
+            <span class="font-label-sm bg-secondary-fixed text-on-secondary-fixed-variant px-2 py-0.5">CASE STUDY</span>
+            <span class="font-label-sm text-on-tertiary-container bg-tertiary-fixed px-2 py-0.5">ATTRIBUTION</span>
+        </div>
+        <h1 class="font-headline-xl text-headline-xl text-primary mb-6 max-w-3xl">Bespoke Attribution Modeling</h1>
+        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Built a custom Markov-chain attribution engine to account for the multi-touch reality of modern B2B SaaS journeys, moving beyond last-click to uncover $450,000 in misallocated spend.</p>
+    </section>
+
+    <!-- Problem & Approach -->
+    <section class="px-margin-mobile md:px-margin-desktop py-16 max-w-container-max mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+            <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8">
+                <div class="flex items-center gap-2 mb-4">
+                    <span class="material-symbols-outlined text-error">report_problem</span>
+                    <h2 class="font-headline-md text-headline-md text-primary">The Problem</h2>
+                </div>
+                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">A B2B SaaS company with a 45-day sales cycle was using last-click attribution to allocate a $1.2M annual ad budget. The data showed a clear problem: brand search and retargeting were getting 78% of credit, while top-of-funnel content and LinkedIn awareness campaigns were being defunded despite clear correlation with pipeline generation. The CMO needed an attribution model that reflected the true contribution of each touchpoint.</p>
+            </div>
+            <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8">
+                <div class="flex items-center gap-2 mb-4">
+                    <span class="material-symbols-outlined text-secondary">route</span>
+                    <h2 class="font-headline-md text-headline-md text-primary">The Approach</h2>
+                </div>
+                <ul class="space-y-3 font-body-md text-on-surface-variant">
+                    <li class="flex items-start gap-3"><span class="material-symbols-outlined text-secondary mt-0.5">check_circle</span><span>Extracted 2.3M customer journeys from GA4, CRM, and ad platforms into a unified BigQuery dataset</span></li><li class="flex items-start gap-3"><span class="material-symbols-outlined text-secondary mt-0.5">check_circle</span><span>Built a first-order Markov chain model calculating transition probabilities between 14 channel states</span></li><li class="flex items-start gap-3"><span class="material-symbols-outlined text-secondary mt-0.5">check_circle</span><span>Simulated removal effect for each channel (10,000 Monte Carlo iterations) to quantify true contribution</span></li><li class="flex items-start gap-3"><span class="material-symbols-outlined text-secondary mt-0.5">check_circle</span><span>Validated the model against holdout cohorts and actual revenue data with 94% correlation</span></li><li class="flex items-start gap-3"><span class="material-symbols-outlined text-secondary mt-0.5">check_circle</span><span>Automated a Tableau dashboard updating weekly for stakeholder reporting and budget reallocation</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results -->
+    <section class="bg-primary-container text-on-primary-container py-20 px-margin-mobile md:px-margin-desktop">
+        <div class="max-w-container-max mx-auto">
+            <p class="font-label-sm text-label-sm text-tertiary-fixed uppercase tracking-widest mb-4">Impact</p>
+            <h2 class="font-headline-lg text-headline-lg mb-8">Measurable Results</h2>
+            <p class="font-body-lg text-body-lg opacity-80 max-w-2xl mb-10">The Markov model revealed that LinkedIn awareness and organic content were being undervalued by 340% and 280% respectively under last-click attribution. By reallocating $450K from over-credited bottom-funnel retargeting to underfunded awareness, the company increased qualified pipeline by 23% while keeping total spend flat.</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-surface-container-low p-5 border border-outline-variant rounded-lg text-center"><div class="font-data-display text-3xl text-primary mb-1">$450K</div><div class="font-label-sm text-on-surface-variant">Reallocated</div></div><div class="bg-surface-container-low p-5 border border-outline-variant rounded-lg text-center"><div class="font-data-display text-3xl text-primary mb-1">94%</div><div class="font-label-sm text-on-surface-variant">Model Accuracy</div></div><div class="bg-surface-container-low p-5 border border-outline-variant rounded-lg text-center"><div class="font-data-display text-3xl text-primary mb-1">+23%</div><div class="font-label-sm text-on-surface-variant">Pipeline Growth</div></div><div class="bg-surface-container-low p-5 border border-outline-variant rounded-lg text-center"><div class="font-data-display text-3xl text-primary mb-1">340%</div><div class="font-label-sm text-on-surface-variant">Awareness Undervalued</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Deep Dive -->
+    <section class="px-margin-mobile md:px-margin-desktop py-20 max-w-container-max mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+            <div class="lg:col-span-2">
+                <h2 class="font-headline-lg text-headline-lg text-primary mb-6">Technical Implementation</h2>
+                <div class="bg-surface-container-low border border-outline-variant rounded-xl p-6 overflow-x-auto">
+                    <pre class="text-sm leading-relaxed"><code># Markov Chain Attribution Engine
+import pandas as pd
+import numpy as np
+from collections import defaultdict
+
+# Build transition matrix from journeys
+journeys = df['channel_path'].str.split(' > ')
+
+# Count transitions
+transitions = defaultdict(lambda: defaultdict(int))
+for journey in journeys:
+    for i in range(len(journey) - 1):
+        transitions[journey[i]][journey[i+1]] += 1
+
+# Convert to probability matrix
+channels = list(transitions.keys())
+n = len(channels)
+P = np.zeros((n, n))
+for i, ch_i in enumerate(channels):
+    total = sum(transitions[ch_i].values())
+    for j, ch_j in enumerate(channels):
+        P[i][j] = transitions[ch_i][ch_j] / total if total > 0 else 0
+
+# Calculate removal effect
+baseline_conversion = simulate_journey(P, channels)
+removal_effects = {}
+
+for removed in channels:
+    if removed in ['start', 'conversion']:
+        continue
+    P_removed = remove_channel(P, channels, removed)
+    conv_without = simulate_journey(P_removed, [c for c in channels if c != removed])
+    removal_effects[removed] = (baseline_conversion - conv_without) / baseline_conversion
+
+# Normalize to attribution weights
+attribution = {k: v/sum(removal_effects.values()) for k, v in removal_effects.items()}
+print(pd.Series(attribution).sort_values(ascending=False))</code></pre>
+                </div>
+            </div>
+            <div>
+                <h3 class="font-headline-md text-headline-md text-primary mb-4">Tools & Stack</h3>
+                <div class="flex flex-wrap gap-2">
+                    <span class="px-3 py-1.5 bg-surface-container-high border border-outline-variant rounded font-label-sm text-primary">Python</span><span class="px-3 py-1.5 bg-surface-container-high border border-outline-variant rounded font-label-sm text-primary">Pandas</span><span class="px-3 py-1.5 bg-surface-container-high border border-outline-variant rounded font-label-sm text-primary">NetworkX</span><span class="px-3 py-1.5 bg-surface-container-high border border-outline-variant rounded font-label-sm text-primary">BigQuery</span><span class="px-3 py-1.5 bg-surface-container-high border border-outline-variant rounded font-label-sm text-primary">Tableau</span><span class="px-3 py-1.5 bg-surface-container-high border border-outline-variant rounded font-label-sm text-primary">GA4</span><span class="px-3 py-1.5 bg-surface-container-high border border-outline-variant rounded font-label-sm text-primary">Salesforce</span><span class="px-3 py-1.5 bg-surface-container-high border border-outline-variant rounded font-label-sm text-primary">Monte Carlo</span>
+                </div>
+                <div class="mt-8 p-5 bg-tertiary-fixed/10 border border-tertiary-fixed/30 rounded-xl">
+                    <h4 class="font-headline-md text-headline-md text-primary mb-3">Key Learnings</h4>
+                    <ul class="space-y-3 font-body-md text-on-surface-variant text-sm">
+                        <li class="flex items-start gap-3"><span class="material-symbols-outlined text-on-tertiary-container mt-0.5">lightbulb</span><span>Last-click systematically undervalues awareness by 3-5x in long sales cycles</span></li><li class="flex items-start gap-3"><span class="material-symbols-outlined text-on-tertiary-container mt-0.5">lightbulb</span><span>Model validation against holdout data was essential — stakeholders trust what they can verify</span></li><li class="flex items-start gap-3"><span class="material-symbols-outlined text-on-tertiary-container mt-0.5">lightbulb</span><span>The removal effect approach is more robust than Shapley value for sparse B2B journeys</span></li><li class="flex items-start gap-3"><span class="material-symbols-outlined text-on-tertiary-container mt-0.5">lightbulb</span><span>Weekly automated dashboards were critical for maintaining budget reallocation discipline</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Study Nav -->
+    <section class="px-margin-mobile md:px-margin-desktop pb-20 max-w-container-max mx-auto">
+        <div class="flex justify-between items-center border-t border-outline-variant pt-8">
+            <a href="case-study-03.html" class="flex items-center gap-2 text-on-surface-variant hover:text-secondary transition-colors font-label-sm"><span class="material-symbols-outlined">arrow_back</span> Previous Case Study</a>
+            <span></span>
+        </div>
+    </section>
+</main>
+
+<footer class="w-full bg-surface-container-low border-t border-outline-variant">
+    <div class="flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop py-12 max-w-container-max mx-auto gap-gutter">
+        <div class="flex items-center gap-3">
+            <img alt="manmarsci Logo" class="w-8 h-8 grayscale opacity-70" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxWpL5Io4IO07RtT792ICtKfYbc2HItCtf_3ussgzXC7ME3Xh2aCIGhHlYDiIHq0NlNK6sijOqzVjXF9hX2XsUps9GWFbGdIO9VtUPBTLadkYF9z_5JNjOaGmCbVttNA_AZrH5Aeljfz2zIlHOPyG6AX-8hshzJggwWnii-vZIQ_dwVn4MeLr_PaP5b_rcfpOvniahvsPi1eI-Zupi0XSZA12A3ll5a4I2cDuz88C4inH8pzqrtIe70A"/>
+            <span class="font-headline-md text-headline-md text-primary">manmarsci</span>
+        </div>
+        <p class="font-label-sm text-label-sm text-on-surface-variant text-center md:text-left">&copy; 2024 manmarsci. All rights reserved.</p>
+        <div class="flex gap-6">
+            <a class="font-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="https://linkedin.com" target="_blank">LinkedIn</a>
+            <a class="font-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="https://github.com" target="_blank">GitHub</a>
+            <a class="font-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="mailto:hello@manmarsci.com">Email</a>
+        </div>
+    </div>
+</footer>
+<script>
+    function showToast(msg) { const t=document.getElementById('toast'),m=document.getElementById('toast-message'); m.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000); }
+    const btn=document.getElementById('mobile-menu-btn'),menu=document.getElementById('mobile-menu'),close=document.getElementById('close-menu'),overlay=document.getElementById('mobile-overlay');
+    btn.addEventListener('click',()=>{menu.classList.add('open');overlay.classList.remove('hidden');document.body.style.overflow='hidden';});
+    close.addEventListener('click',()=>{menu.classList.remove('open');overlay.classList.add('hidden');document.body.style.overflow='';});
+    overlay.addEventListener('click',()=>{menu.classList.remove('open');overlay.classList.add('hidden');document.body.style.overflow='';});
+</script>
+</body>
+</html>
